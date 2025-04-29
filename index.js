@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 dotenv.config();
 
@@ -64,27 +65,41 @@ app.post('/register', async (req, res) => {
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+        return res.status(400).json({ success: false, message: 'Email dan password wajib diisi', token: '' });
+    }
+
     db.query(
         'SELECT * FROM users WHERE email = ?',
         [email],
         async (err, results) => {
             if (err) {
                 console.error('Error fetching user:', err);
-                return res.status(500).json({ message: 'Server error' });
+                return res.status(500).json({ success: false, message: 'Server error', token: '' });
             }
 
             if (results.length === 0) {
-                return res.status(404).json({ message: 'Email tidak ditemukan' });
+                return res.status(404).json({ success: false, message: 'Email tidak ditemukan', token: '' });
             }
 
             const user = results[0];
 
             const validPassword = await bcrypt.compare(password, user.password);
             if (!validPassword) {
-                return res.status(401).json({ message: 'Password salah' });
+                return res.status(401).json({ success: false, message: 'Password salah', token: '' });
             }
 
-            res.status(200).json({ message: 'Login berhasil', user: { id: user.id, name: user.name, email: user.email } });
+            const token = jwt.sign(
+                { id: user.id, email: user.email },
+                process.env.JWT_SECRET,
+                { expiresIn: '1d' }
+            );
+
+            res.status(200).json({
+                success: true, message: 'Login berhasil', token: token, user: {
+                    id: user.id, name: user.name, email: user.email
+                }
+            });
         }
     );
 });
