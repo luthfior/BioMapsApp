@@ -27,7 +27,7 @@ db.connect((err) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
         if (err) {
@@ -43,8 +43,8 @@ app.post('/register', async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, 10);
 
             db.query(
-                'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-                [username, email, hashedPassword],
+                'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+                [name, email, hashedPassword],
                 (err, result) => {
                     if (err) {
                         console.error('Error inserting user:', err);
@@ -84,7 +84,7 @@ app.post('/login', (req, res) => {
                 return res.status(401).json({ message: 'Password salah' });
             }
 
-            res.status(200).json({ message: 'Login berhasil', user: { id: user.id, username: user.username, email: user.email } });
+            res.status(200).json({ message: 'Login berhasil', user: { id: user.id, name: user.name, email: user.email } });
         }
     );
 });
