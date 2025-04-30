@@ -120,17 +120,28 @@ app.post('/auth/google', async (req, res) => {
         const email = payload['email'];
         const name = payload['name'];
 
-        // Buat token JWT kamu sendiri
         const token = jwt.sign(
             { userId, email, name },
             process.env.JWT_SECRET,
             { expiresIn: '1d' }
         );
 
-        res.json({ token });
+        res.status(200).json({
+            success: true,
+            message: 'Login dengan Google berhasil',
+            token,
+            email,
+            name
+        });
     } catch (error) {
         console.error('Google token verification failed:', error);
-        res.status(401).json({ error: 'Invalid ID token' });
+        res.status(401).json({
+            success: false,
+            message: 'ID token tidak valid',
+            token: '',
+            email: '',
+            name: ''
+        });
     }
 });
 
