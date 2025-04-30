@@ -51,7 +51,7 @@ app.post('/register', async (req, res) => {
                         console.error('Error inserting user:', err);
                         return res.status(500).json({ message: 'Gagal register' });
                     }
-                    res.status(201).json({ message: 'User berhasil didaftarkan' });
+                    res.status(201).json({ message: 'Akun berhasil didaftarkan' });
                 }
             );
         } catch (err) {
