@@ -33,11 +33,11 @@ app.post('/register', async (req, res) => {
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
         if (err) {
             console.error('Error checking email:', err);
-            return res.status(500).json({ message: 'Gagal register' });
+            return res.status(500).json({ success: false, message: 'Gagal register' });
         }
 
         if (results.length > 0) {
-            return res.status(400).json({ message: 'Email sudah terdaftar' });
+            return res.status(400).json({ success: false, message: 'Email sudah terdaftar' });
         }
 
         try {
@@ -49,14 +49,14 @@ app.post('/register', async (req, res) => {
                 (err, result) => {
                     if (err) {
                         console.error('Error inserting user:', err);
-                        return res.status(500).json({ message: 'Gagal register' });
+                        return res.status(500).json({ success: false, message: 'Gagal register' });
                     }
-                    res.status(201).json({ message: 'Akun berhasil didaftarkan' });
+                    res.status(201).json({ success: true, message: 'Akun berhasil didaftarkan' });
                 }
             );
         } catch (err) {
             console.error('Error:', err);
-            res.status(500).json({ message: 'Server error' });
+            res.status(500).json({ success: false, message: 'Server error' });
         }
     });
 });
