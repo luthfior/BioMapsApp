@@ -4,10 +4,13 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 
 dotenv.config();
 
 const app = express();
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 app.use(cors());
 app.use(express.json());
 
@@ -102,6 +105,33 @@ app.post('/login', (req, res) => {
             });
         }
     );
+});
+
+app.post('/auth/google', async (req, res) => {
+    const { idToken } = req.body;
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        const userId = payload['sub'];
+        const email = payload['email'];
+        const name = payload['name'];
+
+        // Buat token JWT kamu sendiri
+        const token = jwt.sign(
+            { userId, email, name },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.json({ token });
+    } catch (error) {
+        console.error('Google token verification failed:', error);
+        res.status(401).json({ error: 'Invalid ID token' });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
