@@ -109,6 +109,8 @@ app.post('/login', (req, res) => {
 
 app.post('/auth/google', async (req, res) => {
     const { idToken } = req.body;
+    if (!idToken) return res.status(400).json({ success: false, message: "ID Token tidak diberikan" });
+
     try {
         const ticket = await client.verifyIdToken({
             idToken,
@@ -116,34 +118,33 @@ app.post('/auth/google', async (req, res) => {
         });
 
         const payload = ticket.getPayload();
-        const userId = payload['sub'];
-        const email = payload['email'];
-        const name = payload['name'];
+        const { email, name } = payload;
 
-        const token = jwt.sign(
-            { userId, email, name },
-            process.env.JWT_SECRET,
-            { expiresIn: '1d' }
-        );
+        db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+            if (err) return res.status(500).json({ success: false, message: "Database error" });
 
-        res.status(200).json({
-            success: true,
-            message: 'Login dengan Google berhasil',
-            token,
-            email,
-            name
+            if (results.length === 0) {
+                db.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], (insertErr) => {
+                    if (insertErr) return res.status(500).json({ success: false, message: "Gagal menyimpan user" });
+                });
+            }
+
+            const token = jwt.sign({ email, name }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            res.status(200).json({
+                success: true,
+                message: "Login Google berhasil",
+                token,
+                email,
+                name
+            });
         });
+
     } catch (error) {
-        console.error('Google token verification failed:', error);
-        res.status(401).json({
-            success: false,
-            message: 'ID token tidak valid',
-            token: '',
-            email: '',
-            name: ''
-        });
+        console.error('Google login error:', error);
+        res.status(401).json({ success: false, message: "Google Login gagal" });
     }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
