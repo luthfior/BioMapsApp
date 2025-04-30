@@ -124,7 +124,7 @@ app.post('/auth/google', async (req, res) => {
         const token = jwt.sign(
             { userId, email, name },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '1d' }
         );
 
         res.json({ token });
