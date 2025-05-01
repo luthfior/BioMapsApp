@@ -134,11 +134,13 @@ app.post('/auth/google', async (req, res) => {
                 success: true,
                 message: "Login Google berhasil",
                 token,
-                // user: {
-                //     id: user.id, name: user.name, email: user.email
-                // }
-                name,
-                email
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                }
+                // name,
+                // email
             });
         });
 
