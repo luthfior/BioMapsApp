@@ -109,7 +109,7 @@ app.post('/login', (req, res) => {
 
 app.post('/auth/google', async (req, res) => {
     const { idToken } = req.body;
-    if (!idToken) return res.status(400).json({ success: false, message: "ID Token tidak diberikan" });
+    if (!idToken) return res.status(400).json({ success: false, message: "ID Token tidak diberikan", token: '' });
 
     try {
         const ticket = await client.verifyIdToken({
@@ -121,11 +121,11 @@ app.post('/auth/google', async (req, res) => {
         const { email, name } = payload;
 
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-            if (err) return res.status(500).json({ success: false, message: "Database error" });
+            if (err) return res.status(500).json({ success: false, message: "Database error", token: '' });
 
             if (results.length === 0) {
                 db.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], (insertErr) => {
-                    if (insertErr) return res.status(500).json({ success: false, message: "Gagal menyimpan user" });
+                    if (insertErr) return res.status(500).json({ success: false, message: "Gagal menyimpan user", token: '' });
                 });
             }
 
@@ -134,14 +134,15 @@ app.post('/auth/google', async (req, res) => {
                 success: true,
                 message: "Login Google berhasil",
                 token,
-                email,
-                name
+                user: {
+                    id: user.id, name: user.name, email: user.email
+                }
             });
         });
 
     } catch (error) {
         console.error('Google login error:', error);
-        res.status(401).json({ success: false, message: "Google Login gagal" });
+        res.status(401).json({ success: false, message: "Google Login gagal", token: '' });
     }
 });
 
