@@ -142,7 +142,7 @@ app.post('/auth/google', async (req, res) => {
 
     } catch (error) {
         console.error('Google login error:', error);
-        res.status(401).json({ success: false, message: "Google Login gagal", token: '' });
+        res.status(401).json({ success: false, message: "Google Login gagal" });
     }
 });
 
