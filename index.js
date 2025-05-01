@@ -95,7 +95,7 @@ app.post('/login', (req, res) => {
             const token = jwt.sign(
                 { id: user.id, email: user.email },
                 process.env.JWT_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: '1h' }
             );
 
             res.status(200).json({
@@ -134,13 +134,8 @@ app.post('/auth/google', async (req, res) => {
                 success: true,
                 message: "Login Google berhasil",
                 token,
-                user: {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email
-                }
-                // name,
-                // email
+                name,
+                email
             });
         });
 
