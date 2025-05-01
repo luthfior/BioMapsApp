@@ -109,7 +109,7 @@ app.post('/login', (req, res) => {
 
 app.post('/auth/google', async (req, res) => {
     const { idToken } = req.body;
-    if (!idToken) return res.status(400).json({ success: false, message: "ID Token tidak diberikan", token: '' });
+    if (!idToken) return res.status(400).json({ success: false, message: "ID Token tidak diberikan" });
 
     try {
         const ticket = await client.verifyIdToken({
@@ -121,11 +121,11 @@ app.post('/auth/google', async (req, res) => {
         const { email, name } = payload;
 
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-            if (err) return res.status(500).json({ success: false, message: "Database error", token: '' });
+            if (err) return res.status(500).json({ success: false, message: "Database error" });
 
             if (results.length === 0) {
                 db.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], (insertErr) => {
-                    if (insertErr) return res.status(500).json({ success: false, message: "Gagal menyimpan user", token: '' });
+                    if (insertErr) return res.status(500).json({ success: false, message: "Gagal menyimpan user" });
                 });
             }
 
