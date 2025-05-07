@@ -7,6 +7,7 @@ is an android application built with:
 - **Firebase Authentication**
 - **Room**
 - **Retrofit**
+- **Shared Preference**
 - **Node.js**
 - **MySQL**
 - **Google Maps API**
