@@ -3,7 +3,6 @@
     <string name="title_maps">Maps</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="default_web_client_id">549746046520-0pfkv61rbhqhbiqe9s1re1otsks1jrn3.apps.googleusercontent.com</string>
     <string name="title_activity_zona">ZonaActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

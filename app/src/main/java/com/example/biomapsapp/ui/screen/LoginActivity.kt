@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import com.example.biomapsapp.BuildConfig
 import com.example.biomapsapp.MainActivity
 import com.example.biomapsapp.R
 import com.example.biomapsapp.repository.AuthRepository
@@ -69,8 +70,9 @@ class LoginActivity : ComponentActivity() {
         val factory = AuthViewModelFactory(repository)
         authViewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
 
+        val webClientId = BuildConfig.DEFAULT_WEB_CLIENT_ID
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(webClientId)
             .requestEmail()
             .build()
 

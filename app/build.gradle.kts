@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -24,7 +26,17 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "BASE_URL", "\"https://biomapsapp-production.up.railway.app/\"")
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        val googleMapsApiKey = properties.getProperty("GOOGLE_MAPS_API_KEY") ?: ""
+        val defaultWebClientId = properties.getProperty("DEFAULT_WEB_CLIENT_ID") ?: ""
+
+        buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"$googleMapsApiKey\"")
+        buildConfigField("String", "DEFAULT_WEB_CLIENT_ID", "\"$defaultWebClientId\"")
+
+        manifestPlaceholders.putAll(
+            mapOf("GOOGLE_MAPS_API_KEY" to googleMapsApiKey)
+        )
     }
 
     buildTypes {

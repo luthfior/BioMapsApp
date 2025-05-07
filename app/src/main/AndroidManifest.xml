@@ -18,21 +18,6 @@
         android:theme="@style/Theme.BioMapsApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.screen.HomeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.BioMapsApp" />
-        <activity
-            android:name=".ui.screen.MapsActivity"
-            android:exported="false"
-            android:label="@string/title_maps"
-            android:theme="@style/Theme.BioMapsApp" />
-        <activity
-            android:name=".ui.screen.SafeZoneActivity"
-            android:exported="false"
-            android:label="@string/title_activity_zona"
-            android:theme="@style/Theme.BioMapsApp" />
-        <activity
             android:name=".ui.screen.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
@@ -45,7 +30,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBY2X6HrRROXA3u9EEDY-6jbsPL2PpfUGQ" />
+            android:value="${GOOGLE_MAPS_API_KEY}" />
 
         <activity
             android:name=".MainActivity"
