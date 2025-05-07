@@ -1,0 +1,16 @@
+.idea/
+*.iml
+build/
+
+# Node.js
+node_modules/
+.env
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Log files
+*.log
