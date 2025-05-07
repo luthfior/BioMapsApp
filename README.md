@@ -17,14 +17,12 @@ is an android application built with:
 
 ## 📸 Screenshots
 
-<img src="https://github.com/user-attachments/assets/8f83445d-64d2-405a-870c-bcceba83f046" width="300" />
-
-<img src="https://github.com/user-attachments/assets/8f82f0f6-0b5a-48a0-8a4b-ce67b0ea28ec" width="300" />
-<img src="https://github.com/user-attachments/assets/f030153f-9ed8-4ae8-98a5-c4961ebf3df7" width="300" />
-<img src="https://github.com/user-attachments/assets/2862b643-9f82-446c-9ae7-42e3b7a52038" width="300" />
-<img src="https://github.com/user-attachments/assets/eebdba12-009e-41ee-b097-b4cb378b7e3e" width="300" />
-<img src="https://github.com/user-attachments/assets/d6c62134-8a4e-4be4-8515-8288d88aad58" width="300" />
-<img src="https://github.com/user-attachments/assets/01677eb8-1c06-4073-808d-e7f993b0af8c" width="300" />
+<img src="https://github.com/user-attachments/assets/3007b3cf-236d-4846-86b1-a2e77218dade" width="300" />
+<img src="https://github.com/user-attachments/assets/e6223849-befd-49ca-b320-b00168ef769d" width="300" />
+<img src="https://github.com/user-attachments/assets/bb38e4a8-38d3-48f1-931d-e491464ef81e" width="300" />
+<img src="https://github.com/user-attachments/assets/7767d900-1f63-4b67-9aef-94c274b7bc5b" width="300" />
+<img src="https://github.com/user-attachments/assets/5152ba18-a408-41e4-8377-d5dffd37ebe9" width="300" />
+<img src="https://github.com/user-attachments/assets/fb80d577-db23-4e6e-802a-f98b2da26eb7" width="300" />
 
 ---
 
